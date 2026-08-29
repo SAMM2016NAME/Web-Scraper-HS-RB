@@ -1,5 +1,8 @@
 # Web Scraper Haskell and Ruby
 
+![GitHub Repo stars](https://img.shields.io/github/stars/butaraul/Web-Scraper-HS-RB)
+
+
 **Web-Scraper-hs-rb** is a hybrid **Haskell + Ruby** web scraping and data
 processing pipeline. Ruby does what Ruby is best at — pulling structured
 data out of messy real-world HTML with Nokogiri. Haskell does what Haskell
