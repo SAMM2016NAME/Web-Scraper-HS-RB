@@ -1,6 +1,9 @@
 # Web Scraper Haskell and Ruby
 
-![GitHub Repo stars](https://img.shields.io/github/stars/butaraul/Web-Scraper-HS-RB)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Made with Haskell](https://img.shields.io/badge/Made%20with-Haskell-5D4F85.svg)](https://www.haskell.org/)
+[![Made with Ruby](https://img.shields.io/badge/Made%20with-Ruby-CC342D.svg)](https://www.ruby-lang.org/)
+[![GitHub stars](https://img.shields.io/github/stars/butaraul/Web-Scraper-HS-RB.svg?style=social)](https://github.com/butaraul/Web-Scraper-HS-RB/stargazers)
 
 
 **Web-Scraper-hs-rb** is a hybrid **Haskell + Ruby** web scraping and data
