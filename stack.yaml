@@ -1,0 +1,10 @@
+resolver: lts-21.25 # GHC 9.4.7
+
+packages:
+- .
+
+extra-deps: []
+
+# Generate web-scraper-hs-rb.cabal from package.yaml automatically via hpack.
+# `stack build` does this for you; if you have hpack installed standalone
+# you can also run `hpack` by hand.

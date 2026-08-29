@@ -1,0 +1,107 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.39.6.
+--
+-- see: https://github.com/sol/hpack
+
+name:           web-scraper-hs-rb
+version:        0.1.0.0
+synopsis:       A hybrid Haskell/Ruby web scraping and data processing pipeline
+description:    web-scraper-hs-rb orchestrates fleets of Ruby scraper processes from a type-safe, concurrent Haskell core, cleans and validates the scraped data, and loads it into SQLite. See README.md for full documentation.
+category:       Web
+homepage:       https://github.com/yourname/web-scraper-hs-rb#readme
+bug-reports:    https://github.com/yourname/web-scraper-hs-rb/issues
+author:         web-scraper-hs-rb Contributors
+maintainer:     example@example.com
+copyright:      2026 web-scraper-hs-rb Contributors
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/yourname/web-scraper-hs-rb
+
+library
+  exposed-modules:
+      WebScraper.CLI
+      WebScraper.Config
+      WebScraper.Database
+      WebScraper.Export
+      WebScraper.Logging
+      WebScraper.Processing
+      WebScraper.Progress
+      WebScraper.Scraper
+      WebScraper.Shutdown
+      WebScraper.Types
+  other-modules:
+      Paths_web_scraper_hs_rb
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.14 && <5
+    , bytestring
+    , containers
+    , directory
+    , optparse-applicative
+    , process
+    , sqlite-simple
+    , stm
+    , text
+    , time
+    , unix
+  default-language: Haskell2010
+
+executable web-scraper-hs-rb-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_web_scraper_hs_rb
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.14 && <5
+    , bytestring
+    , containers
+    , directory
+    , optparse-applicative
+    , process
+    , sqlite-simple
+    , stm
+    , text
+    , time
+    , unix
+    , web-scraper-hs-rb
+  default-language: Haskell2010
+
+test-suite web-scraper-hs-rb-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      WebScraper.ConfigSpec
+      WebScraper.ProcessingSpec
+      Paths_web_scraper_hs_rb
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.14 && <5
+    , bytestring
+    , containers
+    , directory
+    , hspec
+    , optparse-applicative
+    , process
+    , sqlite-simple
+    , stm
+    , text
+    , time
+    , unix
+    , web-scraper-hs-rb
+  default-language: Haskell2010

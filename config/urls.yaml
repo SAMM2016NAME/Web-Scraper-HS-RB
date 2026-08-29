@@ -1,0 +1,25 @@
+# web-scraper-hs-rb job configuration.
+#
+# web-scraper-hs-rb ships a small, hand-written parser for this file rather
+# than a full YAML library (see src/WebScraper/Config.hs), so only this
+# subset of YAML is understood:
+#
+#   - top-level "key: value" scalars (name, rate_limit, retries)
+#   - a top-level "urls:" key followed by a block sequence of "  - <url>"
+#     entries (exactly two leading spaces + "- ")
+#   - blank lines and lines starting with '#' are ignored anywhere
+#
+# rate_limit and retries here are *defaults*: they're overridden by the
+# --rate-limit / --retries command-line flags if either is passed.
+
+name: Example web-scraper-hs-rb Job
+rate_limit: 2.0
+retries: 3
+
+urls:
+  - https://example.com
+  - https://example.com/about
+  - https://httpbin.org/html
+  - https://en.wikipedia.org/wiki/Haskell
+  - https://en.wikipedia.org/wiki/Ruby_(programming_language)
+  - https://en.wikipedia.org/wiki/Web_scraping
